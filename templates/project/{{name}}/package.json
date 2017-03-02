@@ -1,0 +1,10 @@
+{
+    "name": "{{name}}",
+    "scripts": {
+        "start": "node_modules/.bin/dpt"
+    },
+    "dependencies": {
+        "dpt": "git+ssh://git@github.com/yandex/dpt.git",
+        "dpt-docs": "git+ssh://git@github.com/yandex/dpt-docs.git"
+    }
+}

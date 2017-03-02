@@ -1,0 +1,26 @@
+.platform(default; @rules) {
+    .const(@platform);
+    @rules();
+}
+
+.platform(@name; @rules) when (@name = @platform) {
+    .const(@name);
+    @rules();
+}
+
+@platforms: desktop, tablet, mobile;
+
+.const(default) {
+    .const(desktop);
+}
+
+.const(desktop) {
+}
+
+.const(tablet) {
+    .const(desktop);
+}
+
+.const(mobile) {
+    .const(desktop);
+}

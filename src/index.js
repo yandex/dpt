@@ -1,4 +1,5 @@
 import Path from 'path';
+import childProcess from 'child_process';
 
 import Server from './server';
 import Library from './blocks/library';
@@ -48,6 +49,7 @@ function main() {
                 🚆 Depot running on port ${app.config.port}.
                 Open http://localhost:${app.config.port} in your browser.
                 Press Ctrl+C to quit.`));
+            childProcess.exec(`open http://localhost:${app.config.port}`);
         });
     } catch (e) {
         logger.error(e);

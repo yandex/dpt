@@ -8,7 +8,7 @@ import * as File from './file';
 
 function init(name) {
     scaffold(
-        Path.resolve(__dirname, '../../templates/project'),
+        Path.resolve(__dirname, '../templates/project'),
         process.cwd(), { name }
     ).then(() => {
         console.log(`Project ${name} was created successully`);

@@ -31,13 +31,13 @@ function start() {
 
 program
     .version('0.1.0')
-    .usage('dpt <command> [options]')
+    .usage('dpt <command> [options]');
 
-.command('init <name>')
+program.command('init <name>')
     .description('Create a Depot project')
-    .action(init)
+    .action(init);
 
-.command('start')
+program.command('start')
     .description('Run a project')
     .action(start);
 

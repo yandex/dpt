@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import program from 'commander';
 import scaffold from 'dpt-scaffold';
 

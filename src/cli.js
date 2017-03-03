@@ -25,17 +25,24 @@ async function init(name) {
     }
 }
 
+function start() {
+    require('./index');
+}
+
 program
     .version('0.1.0')
     .usage('dpt <command> [options]')
 
 .command('init <name>')
     .description('Create a Depot project')
-    .action(init);
+    .action(init)
+
+.command('start')
+    .description('Run a project')
+    .action(start);
 
 if (process.argv.length <= 2) {
     program.help();
-    // require('./index.js');
 } else {
     program.parse(process.argv);
 }

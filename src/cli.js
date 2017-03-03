@@ -3,26 +3,39 @@ import scaffold from 'dpt-scaffold';
 
 import Path from 'path';
 
-import * as File from './file';
+import { dedent } from './util';
+import logger from './logger';
 
-function init(name) {
-    scaffold(
-        Path.resolve(__dirname, '../templates/project'),
-        process.cwd(), { name }
-    ).then(() => {
-        console.log(`Project ${name} was created successully`);
-    });
+async function init(name) {
+    try {
+        await scaffold(
+            Path.resolve(__dirname, '../templates/project'),
+            process.cwd(), { name }
+        );
+        console.log(dedent(`
+            Project ${name} was created successully.
+            
+            Use the following commands to start now:
+            cd ${name}
+            npm install
+            npm start`
+        ));
+    } catch (e) {
+        logger.error(`An error occurred while creating project ${name}:\n${e}`);
+    }
 }
 
 program
     .version('0.1.0')
+    .usage('dpt <command> [options]')
 
-.command('new <name>')
-    .description('Create a dpt project')
+.command('init <name>')
+    .description('Create a Depot project')
     .action(init);
 
 if (process.argv.length <= 2) {
-    require('./index.js');
+    program.help();
+    // require('./index.js');
 } else {
     program.parse(process.argv);
 }

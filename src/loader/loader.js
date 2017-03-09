@@ -107,7 +107,6 @@ class DepotLoader {
 
         this.retrievePaths().then(data => {
             window.requirejs.config({
-                baseUrl: '/',
                 waitSeconds: 100,
                 urlArgs: 'platform=' + Platform.platform,
                 map: {

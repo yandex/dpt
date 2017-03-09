@@ -1,56 +1,60 @@
 {
-  "name": "dpt",
-  "version": "1.0.0",
-  "description": "",
-  "bin": {
-    "dpt": "lib/bin/dpt.js"
-  },
-  "main": "lib/index.js",
-  "scripts": {
-    "babel": "./node_modules/.bin/babel src --out-dir lib --copy-files",
-    "webpack": "./node_modules/.bin/webpack",
-    "prepublish": "npm run babel && npm run webpack -- -p"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "autoprefixer-loader": "^3.2.0",
-    "babel-cli": "^6.6.5",
-    "babel-eslint": "^6.0.0",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "css-loader": "^0.23.1",
-    "eslint": "^2.5.3",
-    "eslint-plugin-react": "^4.2.3",
-    "less-loader": "^2.2.3",
-    "script-loader": "^0.6.1",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.12.14"
-  },
-  "dependencies": {
-    "autoprefixer": "^6.3.6",
-    "babel-core": "^6.7.4",
-    "babel-plugin-transform-es2015-modules-umd": "^6.8.0",
-    "babel-polyfill": "^6.13.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "bluebird": "^3.3.5",
-    "body-parser": "^1.15.0",
-    "commander": "^2.9.0",
-    "dpt-scaffold": "git+ssh://git@github.com/yandex/dpt-scaffold.git",
-    "express": "^4.13.4",
-    "handlebars": "^4.0.5",
-    "less": "^2.6.1",
-    "lodash": "^4.8.2",
-    "moment": "^2.12.0",
-    "postcss": "^5.0.19",
-    "qs": "^6.2.0",
-    "request": "^2.74.0",
-    "shelljs": "^0.7.0",
-    "stylus": "^0.54.5",
-    "winston": "^2.2.0",
-    "yaml-js": "^0.1.3"
-  }
+    "name": "dpt",
+    "version": "0.1.0",
+    "description": "",
+    "bin": {
+        "dpt": "lib/bin/dpt.js"
+    },
+    "main": "lib/index.js",
+    "scripts": {
+        "babel": "./node_modules/.bin/babel src --out-dir lib --copy-files",
+        "webpack": "./node_modules/.bin/webpack",
+        "prepublish": "npm run babel && npm run webpack -- -p"
+    },
+    "contributors": [
+        "Artem Shitov <artemshitov@yandex-team.ru>",
+        "Anton Shein <adrior@yandex-team.ru>",
+        "Danil Kovchiy <kovchiy@yandex-team.ru>"
+    ],
+    "license": "MPL-2.0",
+    "devDependencies": {
+        "autoprefixer-loader": "^3.2.0",
+        "babel-cli": "^6.6.5",
+        "babel-eslint": "^6.0.0",
+        "babel-loader": "^6.2.4",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-preset-es2015": "^6.9.0",
+        "babel-preset-stage-0": "^6.5.0",
+        "css-loader": "^0.23.1",
+        "eslint": "^2.5.3",
+        "eslint-plugin-react": "^4.2.3",
+        "less-loader": "^2.2.3",
+        "script-loader": "^0.6.1",
+        "style-loader": "^0.13.1",
+        "webpack": "^1.12.14"
+    },
+    "dependencies": {
+        "autoprefixer": "^6.3.6",
+        "babel-core": "^6.7.4",
+        "babel-plugin-transform-es2015-modules-umd": "^6.8.0",
+        "babel-polyfill": "^6.13.0",
+        "babel-preset-es2015": "^6.9.0",
+        "babel-preset-stage-0": "^6.5.0",
+        "bluebird": "^3.3.5",
+        "body-parser": "^1.15.0",
+        "commander": "^2.9.0",
+        "dpt-scaffold": "^0.1.0",
+        "express": "^4.13.4",
+        "handlebars": "^4.0.5",
+        "less": "^2.6.1",
+        "lodash": "^4.8.2",
+        "moment": "^2.12.0",
+        "postcss": "^5.0.19",
+        "qs": "^6.2.0",
+        "request": "^2.74.0",
+        "shelljs": "^0.7.0",
+        "stylus": "^0.54.5",
+        "winston": "^2.2.0",
+        "yaml-js": "^0.1.3"
+    }
 }

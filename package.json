@@ -43,7 +43,7 @@
         "bluebird": "^3.3.5",
         "body-parser": "^1.15.0",
         "commander": "^2.9.0",
-        "dpt-scaffold": "^0.1.0",
+        "dpt-scaffold": "^0.1.1",
         "express": "^4.13.4",
         "handlebars": "^4.0.5",
         "less": "^2.6.1",

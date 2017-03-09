@@ -4,7 +4,7 @@
         "start": "node_modules/.bin/dpt start"
     },
     "dependencies": {
-        "dpt": "git+ssh://git@github.com/yandex/dpt.git",
-        "dpt-docs": "git+ssh://git@github.com/yandex/dpt-docs.git"
+        "dpt": "~0.1.0",
+        "dpt-docs": "~0.1.0"
     }
 }

@@ -1,6 +1,6 @@
 import 'beast';
 
-import 'css!{{lib}}.{{block}}';
+import 'css!./{{block}}.less';
 
 Beast
 .decl('{{block}}', {

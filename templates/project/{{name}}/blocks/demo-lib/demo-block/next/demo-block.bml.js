@@ -1,6 +1,6 @@
 import 'beast';
 
-import 'css!demo-lib.demo-block';
+import 'css!./demo-block.less';
 
 Beast.decl('demo-block', {
     expand: function() {

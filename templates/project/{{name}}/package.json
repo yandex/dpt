@@ -4,7 +4,7 @@
         "start": "node_modules/.bin/dpt start"
     },
     "dependencies": {
-        "dpt": "~0.1.1",
-        "dpt-docs": "~0.1.3"
+        "dpt": "~0.1.2",
+        "dpt-docs": "~0.1.4"
     }
 }

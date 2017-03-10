@@ -29,8 +29,10 @@ function start() {
     require('./index');
 }
 
+let meta = require('../package.json');
+
 program
-    .version('0.1.0')
+    .version(meta.version)
     .usage('dpt <command> [options]');
 
 program.command('init <name>')

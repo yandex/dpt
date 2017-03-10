@@ -34,7 +34,7 @@ export default class Library {
     }
 
     static scaffold(config) {
-        let source = Path.join(__dirname, '..', '..', '..', 'templates', 'lib');
+        let source = Path.join(__dirname, '..', '..', 'templates', 'lib');
         let dest = Path.join(process.cwd(), 'blocks');
         return scaffold(source, dest, config);
     }

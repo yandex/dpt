@@ -121,7 +121,7 @@ export default class Block {
     }
 
     static scaffold(config) {
-        let source = Path.join(__dirname, '..', '..', '..', 'templates', 'block');
+        let source = Path.join(__dirname, '..', '..', 'templates', 'block');
         let dest = Path.join(process.cwd(), 'blocks', config.lib);
         return scaffold(source, dest, config);
     }

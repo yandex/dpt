@@ -1,23 +1,26 @@
+import Promise from 'bluebird';
 import _ from 'lodash';
 
 import * as File from './file';
 
 export default class Cache {
-    constructor() {
-        this.items = {};
+    constructor(storages = [new MemoryStorage()]) {
+        this.storages = storages;
     }
 
-    get(id) {
-        return this.items[id];
+    async get(id) {
+        return await Promise.reduce(this.storages, async (acc, s) => {
+            return acc || await s.get(id);
+        });
     }
 
-    set(id, item) {
-        this.items[id] = item;
+    async set(id, item) {
+        await Promise.all(this.storages, s => s.set(id, item));
         return this;
     }
 
     async hasValid(id) {
-        let item = this.get(id);
+        let item = await this.get(id);
         return item && await item.isValid();
     }
 
@@ -71,5 +74,27 @@ class Dependency {
                 throw err;
             }
         }
+    }
+}
+
+export class MemoryStorage {
+    constructor() {
+        this.items = {};
+    }
+
+    // Get and set are async because other types of storage
+    // will be async, e.g. FileStorage
+    async get(id) {
+        return this.items[id];
+    }
+
+    async set(id, item) {
+        this.items[id] = item;
+        return this;
+    }
+
+    async hasValid(id) {
+        let item = this.get(id);
+        return item && await item.isValid();
     }
 }

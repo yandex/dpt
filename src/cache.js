@@ -55,8 +55,6 @@ class Item {
     }
 }
 
-Cache.Item = Item;
-
 class Dependency {
     constructor(path, mtime) {
         this.path = path;
@@ -75,5 +73,3 @@ class Dependency {
         }
     }
 }
-
-Cache.Dependency = Dependency;

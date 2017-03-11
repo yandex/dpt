@@ -6,7 +6,7 @@ import postcss from 'postcss';
 
 import * as File from '../file';
 
-export default async function less(opts, path) {
+export default async function less({ path, ...opts }) {
     let options = {
         sourceMap: { sourceMapFileInline: true },
         filename: path,
@@ -31,8 +31,10 @@ export default async function less(opts, path) {
     imports.unshift(path);
 
     return {
-        body: result.css,
-        dependencies: imports,
-        mime: 'css'
+        content: {
+            body: result.css,
+            mime: 'css'
+        },
+        dependencies: imports
     };
 }

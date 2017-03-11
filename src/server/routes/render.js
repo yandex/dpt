@@ -10,14 +10,17 @@ export default function render(compilers) {
 
     return async function(req, res) {
         let path = Path.join(process.cwd(), req.path);
-        let options = _.pick(req, ['platform']);
+        let options = {
+            platform: req.platform,
+            path
+        };
 
         let comp = _.find(compilers, c => c.test.test(path));
 
         if (comp) {
             try {
                 let { compiler } = comp;
-                let { body, mime } = await cache.cached(compiler)(options, path);
+                let { body, mime } = await cache.cached(compiler)(options);
                 res.type(mime).send(body);
             } catch (err) {
                 res.status(500).send(`Error: ${err.message}`);

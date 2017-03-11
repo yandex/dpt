@@ -6,7 +6,7 @@ import postcss from 'postcss';
 
 import * as File from '../file';
 
-export default async function styl(opts, path) {
+export default async function styl({ path, ...opts }) {
     let input = await File.read(path);
     let compiler = stylus(input)
         .set('filename', path)
@@ -25,8 +25,10 @@ export default async function styl(opts, path) {
     let result = await postcss([autoprefixer]).process(output);
 
     return {
-        body: result.css,
-        dependencies: imports,
-        mime: 'css'
+        content: {
+            body: result.css,
+            mime: 'css'
+        },
+        dependencies: imports
     };
 }

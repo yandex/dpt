@@ -15,7 +15,7 @@ function frontMatter(str) {
     };
 }
 
-export default async function bmlhtml(opts, path) {
+export default async function bmlhtml({path, ...opts}) {
     let file = await File.read(path);
     let fm = frontMatter(file);
     let config = _.omit(fm.attributes, ['title']);
@@ -41,8 +41,10 @@ export default async function bmlhtml(opts, path) {
 </html>`;
 
     return {
-        body,
-        dependencies: [path],
-        mime: 'html'
+        content: {
+            body,
+            mime: 'html'
+        },
+        dependencies: [path]
     };
 }

@@ -8,7 +8,7 @@ import presetES2015 from 'babel-preset-es2015';
 import * as File from '../file';
 import '../vendor/beast';
 
-export default async function js(opts, path) {
+export default async function js({ path, ...opts }) {
     let blockPath = Path.resolve(path, '../../../../..');
     let relPath = Path.relative(blockPath, Path.resolve(path, '..'));
 
@@ -30,8 +30,10 @@ export default async function js(opts, path) {
     });
 
     return {
-        body: result.code,
-        dependencies: [path],
-        mime: 'js'
+        content: {
+            body: result.code,
+            mime: 'js'
+        },
+        dependencies: [path]
     };
 }

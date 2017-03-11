@@ -7,38 +7,46 @@ export default class Cache {
         this.items = {};
     }
 
+    get(id) {
+        return this.items[id];
+    }
+
+    set(id, item) {
+        this.items[id] = item;
+        return this;
+    }
+
+    async hasValid(id) {
+        let item = this.get(id);
+        return item && await item.isValid();
+    }
+
     cached(fn) {
-        let items = this.items;
-        return async function(opts, path) {
-            let id = path + JSON.stringify(opts);
-            let item = items[id];
-            if (item && await item.isValid()) {
-                return {
-                    body: item.body,
-                    mime: item.mime
-                };
-            } else {
-                let result = await fn(opts, path);
-                let dependencies = await Promise.all(result.dependencies.map(async d => {
-                    let mtime = await File.mtime(d);
-                    return new Dependency({path: d, mtime});
-                }));
-                let item = new Item({body: result.body, dependencies, mime: result.mime});
-                items[id] = item;
-                return {
-                    body: result.body,
-                    mime: result.mime
-                };
+        return async(...args) => {
+            let id = JSON.stringify(...args);
+
+            if (!this.hasValid(id)) {
+                let result = await fn(...args);
+
+                let dependencies = await Promise.all(
+                    result.dependencies.map(async path =>
+                        new Dependency(path, await File.mtime(path))
+                    )
+                );
+
+                let item = new Item(result.content, dependencies);
+                this.set(id, item);
             }
+
+            return this.get(id).content;
         };
     }
 }
 
 class Item {
-    constructor({body, dependencies, mime}) {
-        this.body = body;
+    constructor(content, dependencies) {
+        this.content = content;
         this.dependencies = dependencies;
-        this.mime = mime;
     }
 
     async isValid() {
@@ -50,7 +58,7 @@ class Item {
 Cache.Item = Item;
 
 class Dependency {
-    constructor({path, mtime}) {
+    constructor(path, mtime) {
         this.path = path;
         this.mtime = mtime;
     }

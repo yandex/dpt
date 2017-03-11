@@ -25,16 +25,6 @@ export default function render(compilers) {
             } catch (err) {
                 res.status(500).send(`Error: ${err.message}`);
                 logger.error(err);
-
-                if (err.codeFrame) {
-                    logger.error(err.codeFrame);
-                }
-
-                if (err.filename) {
-                    logger.error(`in ${err.filename} (${err.line}:${err.column})`);
-                }
-
-                throw err;
             }
         } else {
             res.sendFile(path);

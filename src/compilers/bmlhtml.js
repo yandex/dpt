@@ -3,8 +3,6 @@ import Path from 'path';
 import _ from 'lodash';
 import yaml from 'yaml-js';
 
-import * as File from '../file';
-
 function frontMatter(str) {
     const regex = /^---$([\s\S]*?)---(\r?\n)*([\s\S]*)/m;
     const [, attrs,, body] = regex.exec(str);
@@ -15,9 +13,8 @@ function frontMatter(str) {
     };
 }
 
-export default async function bmlhtml({path, ...opts}) {
-    let file = await File.read(path);
-    let fm = frontMatter(file);
+export default async function bmlhtml(input, {path, ...opts}) {
+    let fm = frontMatter(input);
     let config = _.omit(fm.attributes, ['title']);
 
     let body = `

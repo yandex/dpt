@@ -4,9 +4,7 @@ import autoprefixer from 'autoprefixer';
 import lessc from 'less';
 import postcss from 'postcss';
 
-import * as File from '../file';
-
-export default async function less({ path, ...opts }) {
+export default async function less(input, { path, ...opts }) {
     let options = {
         sourceMap: { sourceMapFileInline: true },
         filename: path,
@@ -23,7 +21,6 @@ export default async function less({ path, ...opts }) {
         }
     };
 
-    let input = await File.read(path);
     let output = await lessc.render(input, options);
     let result = await postcss([autoprefixer]).process(output.css);
 

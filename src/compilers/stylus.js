@@ -4,10 +4,7 @@ import autoprefixer from 'autoprefixer';
 import stylus from 'stylus';
 import postcss from 'postcss';
 
-import * as File from '../file';
-
-export default async function styl({ path, ...opts }) {
-    let input = await File.read(path);
+export default async function styl(input, { path, ...opts }) {
     let compiler = stylus(input)
         .set('filename', path)
         .define('$platform', opts.platform);

@@ -24,25 +24,21 @@ export default class Cache {
         return item && await item.isValid();
     }
 
-    cached(fn) {
-        return async(...args) => {
-            let id = JSON.stringify(...args);
+    cached(fn, ...args) {
+        let id = JSON.stringify(...args);
 
-            if (!this.hasValid(id)) {
-                let result = await fn(...args);
+        if (!this.hasValid(id)) {
+            let result = await fn(...args);
 
-                let dependencies = await Promise.all(
-                    result.dependencies.map(async path =>
-                        new Dependency(path, await File.mtime(path))
-                    )
-                );
+            let dependencies = await Promise.map(result.dependencies,
+                async path => new Dependency(path, await File.mtime(path))
+            );
 
-                let item = new Item(result.content, dependencies);
-                this.set(id, item);
-            }
+            let item = new Item(result.content, dependencies);
+            this.set(id, item);
+        }
 
-            return this.get(id).content;
-        };
+        return this.get(id).content;
     }
 }
 

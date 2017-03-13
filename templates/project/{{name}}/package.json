@@ -1,7 +1,7 @@
 {
     "name": "{{name}}",
     "scripts": {
-        "start": "node_modules/.bin/dpt start"
+        "start": "dpt start"
     },
     "dependencies": {
         "dpt": "0.2.x",

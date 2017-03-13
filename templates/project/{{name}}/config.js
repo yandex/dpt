@@ -12,8 +12,6 @@ module.exports = {
     name: '{{name}}',
     port: 3010,
     // repository: '',
-    // docs: '',
-    // url: '',
 
     plugins: [
         docs

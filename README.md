@@ -36,3 +36,29 @@ npm start
 
 ## Usage
 
+Depot is based on [BEM methodology](https://bem.info) and is divided into BEM blocks and prototypes you build upon them. When you open your first project, you are presented with the Depot documentation viewer. From there, you can create new blocks and libraries of blocks, you can view docs, you can switch between versions and platforms, and create new versions.
+
+### Directory structure and blocks
+
+The template project has several directories created for you.
+
+```
+blocks/
+const/
+projects/
+vendor/
+```
+
+The most important one is `blocks/`. Depot is based on BEM methodology, and `blocks/` is the places where Depot looks for blocks to construct prototypes from. All blocks are organised in libraries, have versions, and three files for JavaScript, styles and documentation.
+
+```
+blocks/
+    <library name>/
+        <block name>/
+            <version>/
+                <block name>.bml.js
+                <block name>.less
+                <block name>.md
+```
+
+### Projects

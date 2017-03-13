@@ -16,6 +16,7 @@
         "Anton Shein <adrior@yandex-team.ru>",
         "Danil Kovchiy <kovchiy@yandex-team.ru>"
     ],
+    "repository": "https://github.com/yandex/dpt",
     "license": "MPL-2.0",
     "devDependencies": {
         "autoprefixer-loader": "^3.2.0",

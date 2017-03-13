@@ -7,8 +7,8 @@
     },
     "main": "lib/index.js",
     "scripts": {
-        "babel": "./node_modules/.bin/babel src --out-dir lib --copy-files",
-        "webpack": "./node_modules/.bin/webpack",
+        "babel": "babel src --out-dir lib --copy-files",
+        "webpack": "webpack",
         "prepublish": "npm run babel && npm run webpack -- -p"
     },
     "contributors": [

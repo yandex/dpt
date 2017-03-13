@@ -38,7 +38,7 @@ npm start
 
 ## Usage
 
-Depot is based on [BEM methodology](https://bem.info) and is divided into BEM blocks and prototypes you build upon them. When you open your first project, you are presented with the Depot documentation viewer.  From there, you can create new blocks and libraries of blocks, you can view docs, you can switch between versions and platforms, and create new versions.
+Depot is based on [BEM methodology](https://en.bem.info/methodology/) and is divided into BEM blocks and prototypes you build upon them. When you open your first project, you are presented with the Depot documentation viewer.  From there, you can create new blocks and libraries of blocks, you can view docs, you can switch between versions and platforms, and create new versions.
 
 ### Directory structure
 

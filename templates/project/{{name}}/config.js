@@ -28,7 +28,7 @@ module.exports = {
             use: stylus
         },
         {
-            test: /\.js$/,
+            test: /\.bml.js$/,
             use: [bml, babel]
         },
         {

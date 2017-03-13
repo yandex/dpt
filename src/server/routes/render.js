@@ -39,9 +39,9 @@ export default function render(compilers) {
 
         let comp = _.find(compilers, c => c.test.test(path));
 
-        if (comp && (comp.compilers || comp.compiler)) {
+        if (comp) {
             try {
-                let compilers = comp.compilers || [comp.compiler];
+                let compilers = _.castArray(comp.use);
                 let { body, mime } = await cache.cached(compile(compilers), options);
                 res.type(mime).send(body);
             } catch (err) {

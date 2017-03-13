@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "node"
+  - "6"
+  - "5"
+  
+before_script:
+  - npm install
+  
+script:
+  - node lib/bin/dpt.js init test

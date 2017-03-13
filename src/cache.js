@@ -3,31 +3,44 @@ import _ from 'lodash';
 
 import * as File from './file';
 
+// Bluebird's reduce has bizarre edge case rules which we need to work around
+function reduceP(xs, f, init) {
+    async function go(i, acc) {
+        if (i === xs.length) {
+            return acc;
+        } else {
+            return await go(i + 1, await f(acc, xs[i]));
+        }
+    }
+    return go(0, init);
+}
+
 export default class Cache {
     constructor(storages = [new MemoryStorage()]) {
         this.storages = storages;
     }
 
     async get(id) {
-        return await Promise.reduce(this.storages, async (acc, s) => {
+        return await reduceP(this.storages, async(acc, s) => {
             return acc || await s.get(id);
         });
     }
 
     async set(id, item) {
-        await Promise.all(this.storages, s => s.set(id, item));
+        await Promise.map(this.storages, s => s.set(id, item));
         return this;
     }
 
     async hasValid(id) {
         let item = await this.get(id);
-        return item && await item.isValid();
+        return item !== void 0 && await item.isValid();
     }
 
-    cached(fn, ...args) {
+    async cached(fn, ...args) {
         let id = JSON.stringify(...args);
+        let hasValidItem = await this.hasValid(id);
 
-        if (!this.hasValid(id)) {
+        if (!hasValidItem) {
             let result = await fn(...args);
 
             let dependencies = await Promise.map(result.dependencies,
@@ -35,10 +48,10 @@ export default class Cache {
             );
 
             let item = new Item(result.content, dependencies);
-            this.set(id, item);
+            await this.set(id, item);
         }
-
-        return this.get(id).content;
+        let item = await this.get(id);
+        return item.content;
     }
 }
 
@@ -90,7 +103,7 @@ export class MemoryStorage {
     }
 
     async hasValid(id) {
-        let item = this.get(id);
+        let item = await this.get(id);
         return item && await item.isValid();
     }
 }

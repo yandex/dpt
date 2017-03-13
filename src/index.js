@@ -29,7 +29,7 @@ function loadConfig() {
     };
 }
 
-function main() {
+export default function main(options) {
     try {
         const app = { Library, Block, Version, logger };
 
@@ -49,11 +49,12 @@ function main() {
                 🚆 Depot running on port ${app.config.port}.
                 Open http://localhost:${app.config.port} in your browser.
                 Press Ctrl+C to quit.`));
-            childProcess.exec(`open http://localhost:${app.config.port}`);
+
+            if (options.open) {
+                childProcess.exec(`open http://localhost:${app.config.port}`);
+            }
         });
     } catch (e) {
         logger.error(e);
     }
 }
-
-main();

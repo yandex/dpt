@@ -25,15 +25,14 @@ async function init(name) {
     }
 }
 
-function start() {
-    require('./index');
+function start(options) {
+    require('./index')(options);
 }
 
 let meta = require('../package.json');
 
 program
-    .version(meta.version)
-    .usage('dpt <command> [options]');
+    .version(meta.version);
 
 program.command('init <name>')
     .description('Create a Depot project')
@@ -41,6 +40,7 @@ program.command('init <name>')
 
 program.command('start')
     .description('Run a project')
+    .option('--no-open', 'Don\'t open a browser window on start')
     .action(start);
 
 if (process.argv.length <= 2) {

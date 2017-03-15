@@ -100,7 +100,7 @@ class DepotLoader {
         }
         if (this.showProgressBar) {
             var pg = new ProgressBar(0.0);
-            var timer = setInterval(() => pg.increment(), 200);
+            pg.autoincrement();
         }
 
         this.retrievePaths().then(data => {
@@ -124,7 +124,6 @@ class DepotLoader {
 
             window.requirejs(data.imports, () => {
                 if (this.showProgressBar) {
-                    clearInterval(timer);
                     pg.complete(complete);
                 } else {
                     complete();

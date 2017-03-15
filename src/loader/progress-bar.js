@@ -31,7 +31,14 @@ export default class ProgressBar {
         this.setValue(this.value + remaining * 0.1);
     }
 
+    autoincrement(interval = 200) {
+        this.timer = setInterval(() => this.increment(), interval);
+    }
+
     complete(cb) {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
         this.dom.style.transition = 'width 0.01s';
         this.setValue(1);
         setTimeout(() => {

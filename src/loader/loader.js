@@ -38,8 +38,6 @@ class DepotLoader {
         this.queryParams = parseQueryString();
 
         this.onLoad = function() {};
-        this.hideContentWhileLoading = true;
-        this.showProgressBar = true;
     }
 
     config(conf = {}) {
@@ -94,42 +92,32 @@ class DepotLoader {
         return postJson('/api/loader/paths', data);
     }
 
-    load() {
-        if (this.hideContentWhileLoading) {
-            document.body.style.visibility = 'hidden';
-        }
-        if (this.showProgressBar) {
-            var pg = new ProgressBar(0.0);
-            pg.autoincrement();
-        }
+    async load() {
+        document.body.style.visibility = 'hidden';
+        var pg = new ProgressBar(0.0);
+        pg.autoincrement();
 
-        this.retrievePaths().then(data => {
-            window.requirejs.config({
-                waitSeconds: 100,
-                urlArgs: 'platform=' + Platform.platform,
-                map: {
-                    '*': {
-                        ...data.paths,
-                        beast: '/vendor/beast.js',
-                        css: '/.core/require-css.min.js'
-                    }
+        let data = await this.retrievePaths();
+        
+        window.requirejs.config({
+            waitSeconds: 100,
+            urlArgs: 'platform=' + Platform.platform,
+            map: {
+                '*': {
+                    ...data.paths,
+                    beast: '/vendor/beast.js',
+                    css: '/.core/require-css.min.js'
                 }
-            });
-
-            let complete = () => {
-                if (typeof Beast !== 'undefined') Beast.init();
-                document.body.style.visibility = 'visible';
-                this.onLoad();
-            };
-
-            window.requirejs(data.imports, () => {
-                if (this.showProgressBar) {
-                    pg.complete(complete);
-                } else {
-                    complete();
-                }
-            });
+            }
         });
+
+        let complete = () => {
+            if (typeof Beast !== 'undefined') Beast.init();
+            document.body.style.visibility = 'visible';
+            this.onLoad();
+        };
+
+        window.requirejs(data.imports, () => pg.complete(complete));
     }
 }
 

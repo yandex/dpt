@@ -7,4 +7,4 @@ Beast
     expand: function() {
         this.append('{{block}} is invoked');
     }
-});
+})

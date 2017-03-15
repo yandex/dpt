@@ -5,26 +5,47 @@ import ProgressBar from './progress-bar';
 
 window.Platform = new DepotPlatform();
 
-// Main
-
 function parseQueryString() {
     return Qs.parse(window.location.search.substr(1));
+}
+
+function postJson(uri, data) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', uri, true)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                resolve(JSON.parse(xhr.responseText));
+            } else {
+                reject(xhr.responseText);
+            }
+        });
+
+        xhr.addEventListener('error', () => {
+            reject(xhr.responseText);
+        });
+
+        xhr.send(JSON.stringify(data));
+    });
 }
 
 class DepotLoader {
     constructor() {
         this._config = this.initConfig();
-        this.raw = false;
-        this.onLoad = function() {};
         this.queryParams = parseQueryString();
+
+        this.onLoad = function() {};
+        this.raw = false;
         this.hideContentWhileLoading = true;
         this.showProgressBar = true;
     }
 
-    config(conf) {
-        conf = conf || {};
+    config(conf = {}) {
         let imports = this._config.imports.concat(conf.imports || []);
-        let blocks = { ...this._config.blocks, ...(conf.blocks || {}) };
+        let blocks = {...this._config.blocks, ...(conf.blocks || {}) };
 
         this._config = {
             ...this._config,
@@ -32,6 +53,7 @@ class DepotLoader {
             imports,
             blocks
         };
+
         return this;
     }
 
@@ -50,43 +72,28 @@ class DepotLoader {
         }
 
         Object.keys(query).forEach(function(k) {
-            if (k !== 'date' && k !== 'platform' && k.split('.').length === 2) {
+            let isBlock =
+                k !== 'date' &&
+                k !== 'platform' &&
+                k.split('.').length === 2;
+            
+            if (isBlock) {
                 blocks[k] = query[k];
             }
         });
-
 
         return { date, platform, blocks, imports: [] };
     }
 
     retrievePaths() {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+        const data = {
+            config: {
+                raw: this.raw,
+                ...this._config
+            }
+        };
 
-            const data = JSON.stringify({
-                config: {
-                    raw: this.raw,
-                    ...this._config
-                }
-            });
-
-            xhr.open('POST', '/api/loader/paths', true)
-            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-            xhr.addEventListener('load', () => {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.responseText));
-                } else {
-                    reject(xhr.responseText);
-                }
-            });
-
-            xhr.addEventListener('error', () => {
-                reject(xhr.responseText);
-            });
-
-            xhr.send(data);
-        });
+        return postJson('/api/loader/paths', data);
     }
 
     load() {
@@ -107,7 +114,7 @@ class DepotLoader {
                 map: {
                     '*': {
                         ...data.paths,
-                        'beast': '/vendor/beast.js',
+                        beast: '/vendor/beast.js',
                         css: '/.core/require-css.min.js'
                     }
                 }
@@ -137,4 +144,4 @@ class DepotLoader {
 
 let Loader = new DepotLoader();
 window.Loader = Loader;
-document.addEventListener('DOMContentLoaded', Loader.load.bind(Loader));
+document.addEventListener('DOMContentLoaded', () => Loader.load());

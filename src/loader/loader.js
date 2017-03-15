@@ -35,9 +35,12 @@ function postJson(uri, data) {
 class DepotLoader {
     constructor() {
         this._config = this.initConfig();
-        this.queryParams = parseQueryString();
 
-        this.onLoad = function() {};
+        this._beforeLoad = [];
+        this._afterLoad = [];
+        this._loaded = false;
+        
+        this.showProgressBar = false;
     }
 
     config(conf = {}) {
@@ -82,23 +85,30 @@ class DepotLoader {
         return { date, platform, blocks, imports: [] };
     }
 
-    retrievePaths() {
-        const data = {
-            config: {
-                ...this._config
-            }
-        };
+    beforeLoad(fn) {
+        this._beforeLoad.push(fn);
+        return this;
+    }
 
-        return postJson('/api/loader/paths', data);
+    afterLoad(fn) {
+        if (this._loaded) {
+            fn();
+        } else {
+            this._afterLoad.push(fn);
+        }
+        return this;
     }
 
     async load() {
-        document.body.style.visibility = 'hidden';
-        var pg = new ProgressBar(0.0);
-        pg.autoincrement();
+        if (this.showProgressBar) {
+            var pg = new ProgressBar(0.0);
+            pg.autoincrement();
+        }
 
-        let data = await this.retrievePaths();
-        
+        let data = await postJson('/api/loader/paths', {
+            config: this._config
+        });
+
         window.requirejs.config({
             waitSeconds: 100,
             urlArgs: 'platform=' + Platform.platform,
@@ -111,13 +121,13 @@ class DepotLoader {
             }
         });
 
-        let complete = () => {
-            if (typeof Beast !== 'undefined') Beast.init();
-            document.body.style.visibility = 'visible';
-            this.onLoad();
-        };
-
-        window.requirejs(data.imports, () => pg.complete(complete));
+        window.requirejs(data.imports, async() => {
+            this._beforeLoad.forEach(fn => fn());
+            if (this.showProgressBar) await pg.complete();
+            this._afterLoad.forEach(fn => fn());
+            
+            this._loaded = true;
+        });
     }
 }
 

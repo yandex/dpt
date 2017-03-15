@@ -12,6 +12,7 @@ export default class ProgressBar {
             transition: 'width 0.2s'
         });
 
+        document.body.style.visibility = 'hidden';
         document.body.appendChild(this.dom);
         this.dom.style.visibility = 'visible';
         this.render();
@@ -35,15 +36,18 @@ export default class ProgressBar {
         this.timer = setInterval(() => this.increment(), interval);
     }
 
-    complete(cb) {
+    complete() {
         if (this.timer) {
             clearInterval(this.timer);
         }
         this.dom.style.transition = 'width 0.01s';
         this.setValue(1);
-        setTimeout(() => {
-            this.dom.remove();
-            cb();
-        }, 30);
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.dom.remove();
+                document.body.style.visibility = 'visible';
+                resolve();
+            }, 30);
+        });
     }
 }

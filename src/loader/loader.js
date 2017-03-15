@@ -38,7 +38,6 @@ class DepotLoader {
         this.queryParams = parseQueryString();
 
         this.onLoad = function() {};
-        this.raw = false;
         this.hideContentWhileLoading = true;
         this.showProgressBar = true;
     }
@@ -76,7 +75,7 @@ class DepotLoader {
                 k !== 'date' &&
                 k !== 'platform' &&
                 k.split('.').length === 2;
-            
+
             if (isBlock) {
                 blocks[k] = query[k];
             }
@@ -88,7 +87,6 @@ class DepotLoader {
     retrievePaths() {
         const data = {
             config: {
-                raw: this.raw,
                 ...this._config
             }
         };
@@ -97,14 +95,12 @@ class DepotLoader {
     }
 
     load() {
-        if (!this.raw) {
-            if (this.hideContentWhileLoading) {
-                document.body.style.visibility = 'hidden';
-            }
-            if (this.showProgressBar) {
-                var pg = new ProgressBar(0.0);
-                var timer = setInterval(() => pg.increment(), 200);
-            }
+        if (this.hideContentWhileLoading) {
+            document.body.style.visibility = 'hidden';
+        }
+        if (this.showProgressBar) {
+            var pg = new ProgressBar(0.0);
+            var timer = setInterval(() => pg.increment(), 200);
         }
 
         this.retrievePaths().then(data => {
@@ -120,24 +116,20 @@ class DepotLoader {
                 }
             });
 
-            if (this.raw) {
+            let complete = () => {
+                if (typeof Beast !== 'undefined') Beast.init();
+                document.body.style.visibility = 'visible';
                 this.onLoad();
-            } else {
-                let complete = () => {
-                    if (typeof Beast !== 'undefined') Beast.init();
-                    document.body.style.visibility = 'visible';
-                    this.onLoad();
-                };
+            };
 
-                window.requirejs(data.imports, () => {
-                    if (this.showProgressBar) {
-                        clearInterval(timer);
-                        pg.complete(complete);
-                    } else {
-                        complete();
-                    }
-                });
-            }
+            window.requirejs(data.imports, () => {
+                if (this.showProgressBar) {
+                    clearInterval(timer);
+                    pg.complete(complete);
+                } else {
+                    complete();
+                }
+            });
         });
     }
 }

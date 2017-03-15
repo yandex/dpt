@@ -21,11 +21,6 @@ class DepotLoader {
         this.showProgressBar = true;
     }
 
-    add(conf) {
-        console.warn('\'Loader.add\' is deprecated. Please use \'Loader.config\' instead.');
-        return this.config(conf);
-    }
-
     config(conf) {
         conf = conf || {};
         let imports = this._config.imports.concat(conf.imports || []);

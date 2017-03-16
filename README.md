@@ -36,40 +36,4 @@ Finally, run your project:
 npm start
 ```
 
-## Usage
-
-Depot is based on [BEM methodology](https://en.bem.info/methodology/) and is divided into BEM blocks and prototypes you build upon them. When you open your first project, you are presented with the Depot documentation viewer.  From there, you can create new blocks and libraries of blocks, you can view docs, you can switch between versions and platforms, and create new versions.
-
-### Directory structure
-
-The template project has several directories created for you.
-
-```
-blocks/
-const/
-projects/
-vendor/
-```
-
-#### Blocks
-
-The most important one is `blocks/`. Blocks are what you construct your prototypes from. All blocks are organised in libraries, have versions, and three files for JavaScript, styles and documentation.
-
-```
-blocks/
-    <library name>/
-        <block name>/
-            <version>/
-                <block name>.bml.js
-                <block name>.less
-                <block name>.md
-            <block name>.yaml
-```
-
-#### Projects
-
-This is the directory for your prototypes. There is no set structure for it, you may organize your projects as you wish.
-
-#### Const
-
-Every project has a set of fixed fonts, sizes, gaps and so on, that we call design constants. `const` is a place to put your constants. `const.less` contains a template for three common platforms, and this file is imported in all your styles by default.
+When you have a project up and running, go to the [wiki](https://github.com/yandex/dpt/wiki) to learn more about Depot usage.

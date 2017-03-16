@@ -63,14 +63,6 @@ class DepotLoader {
         let platform = Platform.platform;
         let blocks = {};
 
-        let blockDocPattern = /\/blocks\/([^\/]+)\/([^\/]+)\/([^\/]+)\/[\w\d\-_\.]+.(md|ex)/;
-        let location = window.location.pathname;
-        if (blockDocPattern.test(location)) {
-            let matches = location.match(blockDocPattern);
-            let blockName = matches[1] + '.' + matches[2];
-            blocks[blockName] = matches[3];
-        }
-
         Object.keys(query).forEach(function(k) {
             let isBlock =
                 k !== 'date' &&

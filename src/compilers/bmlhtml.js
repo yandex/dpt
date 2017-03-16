@@ -33,7 +33,9 @@ export default async function bmlhtml(input, {path, ...opts}) {
         </script>
         <script>
             window.Loader.config(${JSON.stringify(config)});
-            window.Loader.beforeLoad(Beast.init);
+            window.Loader.beforeLoad(function() {
+                window.Beast.init();
+            });
         </script>
     </body>
 </html>`;

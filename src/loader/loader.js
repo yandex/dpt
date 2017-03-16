@@ -44,8 +44,7 @@ class DepotLoader {
     }
 
     config(conf = {}) {
-        let blocks = {...this._config.blocks, ...(conf.blocks || {}) };
-        let imports = this._config.imports;
+        let { blocks, imports } = this._config;
         
         (conf.imports || []).forEach(i => {
             if (typeof i === 'string') {

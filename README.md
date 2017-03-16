@@ -1,7 +1,5 @@
 # Depot
 
-**Note: this readme is a work in progress.**
-
 Depot is a framework for UI designers who work on large-scale projects. It provides a set of tools to prototype designs which span multiple platforms and are meant to be maintained for multiple versions.
 
 At large scale projects typically consist of several services run by different teams of developers. Each team may have a different implementation of the same UI components. These implementations often come out of sync, so the UI designers must maintain several versions of the same components at once. It becomes even more complicated when you design for several platforms and devices at once.
@@ -35,5 +33,7 @@ Finally, run your project:
 ```
 npm start
 ```
+
+## Usage
 
 When you have a project up and running, go to the [wiki](https://github.com/yandex/dpt/wiki) to learn more about Depot usage.

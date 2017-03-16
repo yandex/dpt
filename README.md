@@ -36,4 +36,4 @@ npm start
 
 ## Usage
 
-When you have a project up and running, go to the [wiki](https://github.com/yandex/dpt/wiki) to learn more about Depot usage.
+When you have a project up and running, proceed to the [wiki](https://github.com/yandex/dpt/wiki) to learn more about using Depot.

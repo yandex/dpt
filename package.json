@@ -9,7 +9,7 @@
     "scripts": {
         "babel": "babel src --out-dir lib --copy-files",
         "webpack": "webpack",
-        "prepublish": "npm run babel && npm run webpack -- -p"
+        "prepublish": "rm -rf lib && npm run babel && npm run webpack -- -p"
     },
     "contributors": [
         "Artem Shitov <artemshitov@yandex-team.ru>",

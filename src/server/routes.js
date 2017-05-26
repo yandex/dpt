@@ -30,7 +30,9 @@ export default function(render) {
         });
     }
 
+
     // Rendering and statics
+    router.use('/vendor', express.static(Path.join(process.cwd(), 'vendor')));
     router.use(middleware.platform, render);
     router.use(express.static(process.cwd()));
 

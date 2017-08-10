@@ -10,26 +10,15 @@ function parseQueryString() {
 }
 
 function postJson(uri, data) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('POST', uri, true)
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-        xhr.addEventListener('load', () => {
-            if (xhr.status === 200) {
-                resolve(JSON.parse(xhr.responseText));
-            } else {
-                reject(xhr.responseText);
-            }
-        });
-
-        xhr.addEventListener('error', () => {
-            reject(xhr.responseText);
-        });
-
-        xhr.send(JSON.stringify(data));
-    });
+    return fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        ...opts
+    }).then(r => r.json());
 }
 
 class DepotLoader {

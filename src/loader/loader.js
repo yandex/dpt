@@ -71,12 +71,7 @@ class DepotLoader {
         let blocks = {};
 
         Object.keys(query).forEach(function(k) {
-            let isBlock =
-                k !== 'date' &&
-                k !== 'platform' &&
-                k.split('.').length === 2;
-
-            if (isBlock) {
+            if (k.split('.').length === 2) {
                 blocks[k] = query[k];
             }
         });

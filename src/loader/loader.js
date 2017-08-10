@@ -28,13 +28,13 @@ class DepotLoader {
         this._beforeLoad = [];
         this._afterLoad = [];
         this._loaded = false;
-        
+
         this.showProgressBar = false;
     }
 
     config(conf = {}) {
         let { blocks, imports } = this._config;
-        
+
         (conf.imports || []).forEach(i => {
             if (typeof i === 'string') {
                 imports.push(i);
@@ -104,11 +104,11 @@ class DepotLoader {
             }
         });
 
-        window.requirejs(data.imports, async() => {
+        window.requirejs(data.imports, async () => {
             this._beforeLoad.forEach(fn => fn());
             if (this.showProgressBar) await pg.complete();
             this._afterLoad.forEach(fn => fn());
-            
+
             this._loaded = true;
         });
     }

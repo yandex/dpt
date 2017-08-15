@@ -4,7 +4,7 @@
         "start": "dpt start"
     },
     "dependencies": {
-        "dpt": "0.3.x",
-        "dpt-docs": "0.3.x"
+        "dpt": "0.6.x",
+        "dpt-docs": "0.4.x"
     }
 }

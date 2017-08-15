@@ -9,8 +9,8 @@ function parseQueryString() {
     return Qs.parse(window.location.search.substr(1));
 }
 
-function postJson(uri, data) {
-    return fetch(url, {
+function postJson(uri, data, opts = {}) {
+    return fetch(uri, {
         method: 'POST',
         credentials: 'include',
         headers: {

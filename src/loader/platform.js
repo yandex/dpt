@@ -2,7 +2,7 @@ import Qs from 'qs';
 
 export default class DepotPlatform {
     constructor() {
-        this.platform = qsPlatform() || fnPlatform() || uaPlatform() || 'desktop';
+        this.platform = this.qsPlatform() || this.fnPlatform() || this.uaPlatform() || 'desktop';
     }
 
     qsPlatform() {

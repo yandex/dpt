@@ -16,6 +16,7 @@ function frontMatter(str) {
 export default async function bmlhtml(input, {path, ...opts}) {
     let fm = frontMatter(input);
     let config = _.omit(fm.attributes, ['title', 'head']);
+    const head = fm.attributes.head;
 
     let body = `
 <html>
@@ -26,7 +27,7 @@ export default async function bmlhtml(input, {path, ...opts}) {
         <script src="/.core/babel-polyfill.js"></script>
         <script src="/.core/require.js"></script>
         <script src="/.core/loader.js"></script>
-        ${fm.attributes.head}
+        ${head ? head : ''}
     </head>
     <body>
         <script type="bml">
